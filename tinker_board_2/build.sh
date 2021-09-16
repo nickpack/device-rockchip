@@ -1,5 +1,22 @@
 #!/bin/bash
 
+if [ ! $VERSION ]; then
+    VERSION="debug"
+fi
+echo "VERSION: $VERSION"
+
+if [ ! $VERSION_NUMBER ]; then
+	VERSION_NUMBER="eng"-"$USER"-"$(date +%Y%m%d)"
+	RELEASE_NAME="Tinker_Board_2-Debian-Buster-"
+else
+	VERSION_NUMBER="$VERSION_NUMBER"-"$(date +%Y%m%d)"
+	RELEASE_NAME="Tinker_Board_2-Debian-Buster-v"
+fi
+echo "VERSION_NUMBER: $VERSION_NUMBER"
+
+RELEASE_NAME="$RELEASE_NAME""$VERSION_NUMBER"
+echo "RELEASE_NAME: $RELEASE_NAME"
+
 export LC_ALL=C
 export LD_LIBRARY_PATH=
 unset RK_CFG_TOOLCHAIN
@@ -603,7 +620,7 @@ function build_debian(){
 		ln -rsf linaro-buster-alip-*.tar.gz linaro-buster-$ARCH.tar.gz
 	fi
 
-	VERSION=debug ARCH=$ARCH ./mk-rootfs-buster.sh
+	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ARCH=$ARCH ./mk-rootfs-buster.sh
 	./mk-image.sh
 
 	finish_build
@@ -876,9 +893,9 @@ function build_sdcard_package(){
 
 function build_save(){
 	IMAGE_PATH=$TOP_DIR/rockdev
-	DATE=$(date  +%Y%m%d.%H%M)
-	STUB_PATH=Image/"$RK_KERNEL_DTS"_"$DATE"_RELEASE_TEST
-	STUB_PATH="$(echo $STUB_PATH | tr '[:lower:]' '[:upper:]')"
+	#DATE=$(date  +%Y%m%d.%H%M)
+	STUB_PATH=IMAGE/"$RELEASE_NAME"_"$VERSION"
+	#STUB_PATH="$(echo $STUB_PATH | tr '[:lower:]' '[:upper:]')"
 	export STUB_PATH=$TOP_DIR/$STUB_PATH
 	export STUB_PATCH_PATH=$STUB_PATH/PATCHES
 	mkdir -p $STUB_PATH
@@ -888,7 +905,7 @@ function build_save(){
 		"$TOP_DIR/device/rockchip/common/gen_patches_body.sh"
 
 	#Copy stubs
-	.repo/repo/repo manifest -r -o $STUB_PATH/manifest_${DATE}.xml
+	.repo/repo/repo manifest -r -o $STUB_PATH/manifest_$RELEASE_NAME.xml
 	mkdir -p $STUB_PATCH_PATH/kernel
 	cp kernel/.config $STUB_PATCH_PATH/kernel
 	cp kernel/vmlinux $STUB_PATCH_PATH/kernel

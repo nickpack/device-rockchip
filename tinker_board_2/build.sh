@@ -904,8 +904,6 @@ function build_save(){
 	.repo/repo/repo forall -c \
 		"$TOP_DIR/device/rockchip/common/gen_patches_body.sh"
 
-	#Copy stubs
-	.repo/repo/repo manifest -r -o $STUB_PATH/manifest_$RELEASE_NAME.xml
 	mkdir -p $STUB_PATCH_PATH/kernel
 	cp kernel/.config $STUB_PATCH_PATH/kernel
 	cp kernel/vmlinux $STUB_PATCH_PATH/kernel
@@ -916,6 +914,9 @@ function build_save(){
 	echo "UBOOT:  defconfig: $RK_UBOOT_DEFCONFIG" >> $STUB_PATH/build_cmd_info
 	echo "KERNEL: defconfig: $RK_KERNEL_DEFCONFIG, dts: $RK_KERNEL_DTS" >> $STUB_PATH/build_cmd_info
 	echo "BUILDROOT: $RK_CFG_BUILDROOT" >> $STUB_PATH/build_cmd_info
+
+	#Copy stubs
+	.repo/repo/repo manifest -r -o $STUB_PATH/manifest_$RELEASE_NAME.xml
 
 	finish_build
 }

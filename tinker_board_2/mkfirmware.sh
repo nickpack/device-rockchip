@@ -24,6 +24,7 @@ else
 	OEM_DIR=
 fi
 USER_DATA_DIR=$TOP_DIR/device/rockchip/userdata/$RK_USERDATA_DIR
+USER_DATA_DIR_TMP=$ROCKDEV/userdata_tmp
 MISC_IMG=$TOP_DIR/device/rockchip/rockimg/$RK_MISC
 ROOTFS_IMG=$TOP_DIR/$RK_ROOTFS_IMG
 ROOTFS_IMG_SOURCE=$TOP_DIR/buildroot/output/$RK_CFG_BUILDROOT/images/rootfs.$RK_ROOTFS_TYPE
@@ -249,16 +250,31 @@ if [ $RK_USERDATA_DIR ]
 then
 	if [ -d "$USER_DATA_DIR" ]
 	then
+		rm -f $USER_DATA_DIR/overlays/*.dtbo
+
+		for file in $USER_DATA_DIR/overlays/*.dts
+		do
+			dts=${file##*/}
+			dtbo=${dts%.*}
+			dtc -@ -O dtb -o $USER_DATA_DIR/overlays/$dtbo.dtbo $USER_DATA_DIR/overlays/$dts
+		done
+
+		mkdir -p $USER_DATA_DIR_TMP
+		cp -r $USER_DATA_DIR/* $USER_DATA_DIR_TMP
+		rm $USER_DATA_DIR_TMP/overlays/*.dts
+		rm $USER_DATA_DIR_TMP/overlays/.gitignore
+
 		echo "#!/bin/sh" > $USERDATA_FAKEROOT_SCRIPT
 		echo "set -e" >> $USERDATA_FAKEROOT_SCRIPT
 		if [ "$RK_USERDATA_FS_TYPE" = "ubi" ]; then
-			echo "$MKIMAGE $USER_DATA_DIR $ROCKDEV/userdata.img $RK_USERDATA_FS_TYPE $RK_USERDATA_PARTITION_SIZE userdata $RK_UBI_PAGE_SIZE $RK_UBI_BLOCK_SIZE"  >> $USERDATA_FAKEROOT_SCRIPT
+			echo "$MKIMAGE $USER_DATA_DIR_TMP $ROCKDEV/userdata.img $RK_USERDATA_FS_TYPE $RK_USERDATA_PARTITION_SIZE userdata $RK_UBI_PAGE_SIZE $RK_UBI_BLOCK_SIZE"  >> $USERDATA_FAKEROOT_SCRIPT
 		else
-			echo "$MKIMAGE $USER_DATA_DIR $ROCKDEV/userdata.img $RK_USERDATA_FS_TYPE"  >> $USERDATA_FAKEROOT_SCRIPT
+			echo "$MKIMAGE $USER_DATA_DIR_TMP $ROCKDEV/userdata.img $RK_USERDATA_FS_TYPE"  >> $USERDATA_FAKEROOT_SCRIPT
 		fi
 		chmod a+x $USERDATA_FAKEROOT_SCRIPT
 		$FAKEROOT_TOOL -- $USERDATA_FAKEROOT_SCRIPT
 		rm -f $USERDATA_FAKEROOT_SCRIPT
+		rm -rf $USER_DATA_DIR_TMP
 	else
 		echo "warning: $USER_DATA_DIR not found!"
 	fi

@@ -13,9 +13,9 @@ export RK_BOOT_IMG=boot.img
 # kernel image path
 export RK_KERNEL_IMG=kernel/arch/arm64/boot/Image
 # parameter for GPT table
-export RK_PARAMETER=parameter-4.19.txt
+export RK_PARAMETER=parameter.txt
 # Buildroot config
-export RK_CFG_BUILDROOT=rockchip_rk3399_4.19
+export RK_CFG_BUILDROOT=rockchip_rk3399
 # Build Debian by default
 export RK_ROOTFS_SYSTEM=debian
 # Recovery config

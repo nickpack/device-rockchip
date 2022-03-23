@@ -1,6 +1,7 @@
 ##### Hardware Interface Config #####
 
 ## Note: uart4 and spi1 are the same pins. Set the latter one while both on. ##
+## Note: DP_Sound is based on spdif function. ##
 
 intf:fiq_debugger=on
 #intf:uart0=off
@@ -8,7 +9,7 @@ intf:fiq_debugger=on
 #intf:i2c6=off
 #intf:i2c7=off
 #intf:i2s0=off
-#intf:spdif=off
+intf:spdif=on
 #intf:spi1=off
 #intf:spi5=off
 #intf:pwm0=off

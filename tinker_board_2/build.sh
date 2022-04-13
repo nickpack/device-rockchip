@@ -641,9 +641,16 @@ function build_debian(){
 	echo "=========Start building debian for $ARCH========="
 
 	cd debian
+
+  ROOTFS_BASE_DIR="../rootfs-base"
+
+  if [ ! -e $ROOTFS_BASE_DIR ]; then
+    ROOTFS_BASE_DIR="."
+  fi
+
 	if [ ! -e linaro-buster-$ARCH.tar.gz ]; then
 		RELEASE=buster TARGET=desktop ARCH=$ARCH ./mk-base-debian.sh
-		ln -rsf linaro-buster-alip-*.tar.gz linaro-buster-$ARCH.tar.gz
+		ln -rsf $ROOTFS_BASE_DIR/linaro-buster-alip-*.tar.gz linaro-buster-$ARCH.tar.gz
 	fi
 
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ARCH=$ARCH ./mk-rootfs-buster.sh

@@ -650,7 +650,7 @@ function build_debian(){
 
 	if [ ! -e linaro-buster-$ARCH.tar.gz ]; then
 		RELEASE=buster TARGET=desktop ARCH=$ARCH ./mk-base-debian.sh
-		ln -rsf $ROOTFS_BASE_DIR/linaro-buster-alip-*.tar.gz linaro-buster-$ARCH.tar.gz
+		ln -rsf $ROOTFS_BASE_DIR/linaro-buster-alip-$ARCH-*.tar.gz linaro-buster-$ARCH.tar.gz
 	fi
 
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ARCH=$ARCH ./mk-rootfs-buster.sh

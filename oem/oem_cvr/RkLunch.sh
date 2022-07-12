@@ -5,4 +5,10 @@
 
 export enable_encoder_debug=0
 
-cvr_app &
+export rt_vo_disable_vop=0
+
+amixer -c 0 sset "Playback Path" SPK
+
+amixer -c 0 sset "Capture MIC Path" "Main Mic"
+
+LD_PRELOAD=/oem/libthird_media.so cvr_app &

@@ -3,11 +3,13 @@
 # Target arch
 export RK_ARCH=arm64
 # Uboot defconfig
-export RK_UBOOT_DEFCONFIG=evb-rk3326
+export RK_UBOOT_DEFCONFIG=rk3326
 # Trust choose ignore bl32, including --ignore-bl32
 export TRUST_PACK_IGNORE_BL32=
 # Kernel defconfig
-export RK_KERNEL_DEFCONFIG=rockchip_linux_defconfig
+export RK_KERNEL_DEFCONFIG=px30_linux_defconfig
+# Kernel defconfig fragment
+export RK_KERNEL_DEFCONFIG_FRAGMENT=rk3326_linux.config
 # Kernel dts
 export RK_KERNEL_DTS=rk3326-evb-lp3-v10-linux
 # boot image type
@@ -33,6 +35,8 @@ export RK_JOBS=12
 export RK_TARGET_PRODUCT=rk3326
 # Set rootfs type, including ext2 ext4 squashfs
 export RK_ROOTFS_TYPE=ext4
+# Set debian version (debian10: buster, debian11: bullseye)
+export RK_DEBIAN_VERSION=buster
 # yocto machine
 export RK_YOCTO_MACHINE=rockchip-rk3326-evb
 # rootfs image path

@@ -108,7 +108,7 @@ uvc_device_config()
   UDC=`ls /sys/class/udc/| awk '{print $1}'`
   if [ "$UDC"x = "fcc00000.dwc3"x ]; then
      echo "rk3568 uvc config dwc3"
-     echo 4 > ${USB_FUNCTIONS_DIR}/uvc.gs6/uvc_num_request
+     echo 2 > ${USB_FUNCTIONS_DIR}/uvc.gs6/uvc_num_request
      echo 5 > ${USB_FUNCTIONS_DIR}/uvc.gs6/streaming_maxburst
   else
      echo 2 > ${USB_FUNCTIONS_DIR}/uvc.gs6/uvc_num_request
@@ -180,6 +180,7 @@ uac1_device_config()
   echo 3 > ${UAC_GS0}/c_chmask
   echo 2 > ${UAC_GS0}/c_ssize
   echo 1 > ${UAC_GS0}/c_feature_unit
+  echo 4 > ${UAC_GS0}/req_number
   echo 8000,16000,44100,48000 > ${UAC_GS0}/c_srate
 
   ln -s ${UAC_GS0} ${USB_CONFIGS_DIR}/f2
@@ -197,6 +198,7 @@ uac2_device_config()
   echo 3 > ${UAC_GS0}/c_chmask
   echo 2 > ${UAC_GS0}/c_ssize
   echo 0 > ${UAC_GS0}/c_feature_unit
+  echo 4 > ${UAC_GS0}/req_number
   echo 8000,16000,44100,48000 > ${UAC_GS0}/c_srate
 
   ln -s ${UAC_GS0} ${USB_CONFIGS_DIR}/f2

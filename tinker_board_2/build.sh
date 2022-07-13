@@ -101,7 +101,7 @@ function unset_board_config_all()
 CMD=`realpath $0`
 COMMON_DIR=`dirname $CMD`
 TOP_DIR=$(realpath $COMMON_DIR/../../..)
-LIB_MODULES_DIR=$TOP_DIR/debian/lib_modules
+LIB_MODULES_DIR=$TOP_DIR/debian_new/lib_modules
 cd $TOP_DIR
 
 BOARD_CONFIG=$TOP_DIR/device/rockchip/.BoardConfig.mk
@@ -814,7 +814,7 @@ function build_debian(){
 
 	echo "=========Start building debian for $ARCH========="
 
-	cd debian
+	cd debian_new
 	if [ ! -e linaro-$RK_DEBIAN_VERSION-alip-*.tar.gz ]; then
 		RELEASE=$RK_DEBIAN_VERSION TARGET=desktop ARCH=$ARCH ./mk-base-debian.sh
 		ln -rsf linaro-$RK_DEBIAN_VERSION-alip-*.tar.gz linaro-$RK_DEBIAN_VERSION-$ARCH.tar.gz
@@ -843,7 +843,7 @@ function build_rootfs(){
 			;;
 		debian)
 			build_debian
-			ln -rsf debian/linaro-rootfs.img \
+			ln -rsf debian_new/linaro-rootfs.img \
 				$RK_ROOTFS_DIR/rootfs.ext4
 			;;
 		*)
@@ -1071,7 +1071,7 @@ function build_cleanall(){
 	rm -rf $LIB_MODULES_DIR
 	rm -rf buildroot/output
 	rm -rf yocto/build/tmp
-	rm -rf debian/binary
+	rm -rf debian_new/binary
 
 	finish_build
 }

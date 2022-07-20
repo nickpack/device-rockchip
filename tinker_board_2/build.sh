@@ -822,9 +822,9 @@ function build_debian(){
 		ROOTFS_BASE_DIR="."
 	fi
 
-	if [ ! -e linaro-$RK_DEBIAN_VERSION-alip-$ARCH-*.tar.gz ]; then
+	if [ ! -e linaro-$RK_DEBIAN_VERSION-alip-$ARCH.tar.gz ]; then
 		RELEASE=$RK_DEBIAN_VERSION TARGET=desktop ARCH=$ARCH ./mk-base-debian.sh
-		ln -rsf $ROOTFS_BASE_DIR/linaro-buster-alip-$ARCH-*.tar.gz linaro-$RK_DEBIAN_VERSION-alip-$ARCH.tar.gz
+		ln -rsf $ROOTFS_BASE_DIR/linaro-$RK_DEBIAN_VERSION-alip-$ARCH-*.tar.gz linaro-$RK_DEBIAN_VERSION-alip-$ARCH.tar.gz
 	fi
 
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ARCH=$ARCH ./mk-rootfs-$RK_DEBIAN_VERSION.sh

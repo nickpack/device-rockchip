@@ -15,7 +15,7 @@ export RK_KERNEL_IMG=kernel/arch/arm64/boot/Image
 # parameter for GPT table
 export RK_PARAMETER=parameter.txt
 # Buildroot config
-export RK_CFG_BUILDROOT=rockchip_rk3399
+export RK_CFG_BUILDROOT=rockchip_tinker_board_2
 # Build Debian by default
 export RK_ROOTFS_SYSTEM=debian
 # rootfs architecture

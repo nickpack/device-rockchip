@@ -33,7 +33,7 @@ export RK_ROOTFS_TYPE=ext4
 # Set debian version (debian10: buster, debian11: bullseye)
 export RK_DEBIAN_VERSION=buster
 # yocto machine
-export RK_YOCTO_MACHINE=rockchip-rk3399-sapphire-excavator
+export RK_YOCTO_MACHINE=rockchip-rk3399-tinker_board_2
 # rootfs image path
 export RK_ROOTFS_IMG=rockdev/rootfs.${RK_ROOTFS_TYPE}
 # Set ramboot image type

@@ -789,11 +789,14 @@ function kernel_version(){
 function build_yocto(){
 	check_config RK_YOCTO_MACHINE || return 0
 
-	echo "=========Start building ramboot========="
+	echo "=========Start building yocto========="
 	echo "TARGET_MACHINE=$RK_YOCTO_MACHINE"
 	echo "====================================="
 
 	KERNEL_VERSION=$(kernel_version kernel/)
+
+	build_modules
+	cp -rf debian_new/lib_modules/lib yocto/meta-asus-local/recipes-bsp/asus-overlay/files/common/
 
 	cd yocto
 	ln -sf $RK_YOCTO_MACHINE.conf build/conf/local.conf

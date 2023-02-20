@@ -817,7 +817,7 @@ function build_debian(){
 
 	echo "=========Start building debian for $ARCH========="
 
-	cd debian_new
+	cd debian
 
 	ROOTFS_BASE_DIR="../rootfs-base"
 
@@ -828,8 +828,10 @@ function build_debian(){
 	if [ ! -e linaro-$RK_DEBIAN_VERSION-alip-$ARCH.tar.gz ]; then
 		RELEASE=$RK_DEBIAN_VERSION TARGET=desktop ARCH=$ARCH ./mk-base-debian.sh
 		ln -rsf $ROOTFS_BASE_DIR/linaro-$RK_DEBIAN_VERSION-alip-$ARCH-*.tar.gz linaro-$RK_DEBIAN_VERSION-alip-$ARCH.tar.gz
+		ln -rsf $ROOTFS_BASE_DIR/linaro-$RK_DEBIAN_VERSION-alip-$ARCH-*.tar.gz linaro-$RK_DEBIAN_VERSION-$ARCH.tar.gz
 	fi
 
+	ln -rsf ../debian_new/lib_modules lib_modules
 	VERSION_NUMBER=$VERSION_NUMBER VERSION=$VERSION ARCH=$ARCH ./mk-rootfs-$RK_DEBIAN_VERSION.sh
 	./mk-image.sh
 

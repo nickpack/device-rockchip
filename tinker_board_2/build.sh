@@ -855,7 +855,7 @@ function build_rootfs(){
 			;;
 		debian)
 			build_debian
-			ln -rsf debian_new/linaro-rootfs.img \
+			ln -rsf debian/linaro-rootfs.img \
 				$RK_ROOTFS_DIR/rootfs.ext4
 			;;
 		*)
@@ -1083,7 +1083,7 @@ function build_cleanall(){
 	rm -rf $LIB_MODULES_DIR
 	rm -rf buildroot/output
 	rm -rf yocto/build/tmp
-	rm -rf debian_new/binary
+	rm -rf debian/binary
 
 	finish_build
 }
